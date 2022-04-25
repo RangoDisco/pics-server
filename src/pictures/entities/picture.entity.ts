@@ -1,10 +1,11 @@
-import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Collection } from 'src/collections/entities/collection.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   Entity,
+  ManyToMany,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -20,19 +21,26 @@ export class Picture {
   title: string;
 
   @Column()
+  @Field(() => String, { description: "Picture's URL" })
+  contentUrl: string;
+
+  @Column()
   @Field(() => String, { description: "Picture's location" })
   location: string;
 
   @Column()
   @Field(() => Date, { description: 'Date when the picture was taken' })
-  date: string;
+  date: Date;
 
   @ManyToOne(() => User, (User) => User.pictures)
   author: User;
 
+  @ManyToMany(() => Collection, (Collection) => Collection.pictures)
+  collections: Collection[];
+
   @Column()
   @Field(() => Date, {
-    description: 'Date when the picture was added in the database',
+    description: 'Date when the picture was added into the database',
   })
   creationDate: Date;
 

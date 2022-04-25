@@ -5,6 +5,9 @@ import { PicturesModule } from './pictures/pictures.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { UsersModule } from './users/users.module';
+import { CollectionsModule } from './collections/collections.module';
+import { CategoriesModule } from './categories/categories.module';
+import { TagsModule } from './tags/tags.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -33,6 +36,12 @@ dotenv.config();
     }),
 
     UsersModule,
+
+    CollectionsModule,
+
+    CategoriesModule,
+
+    TagsModule,
   ],
 })
 export class AppModule {
