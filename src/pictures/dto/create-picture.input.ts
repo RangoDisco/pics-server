@@ -1,4 +1,5 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, Int } from '@nestjs/graphql';
+import { Collection } from 'src/collections/entities/collection.entity';
 
 @InputType()
 export class CreatePictureInput {
@@ -9,5 +10,11 @@ export class CreatePictureInput {
   location: string;
 
   @Field(() => Date)
-  date: string;
+  date: Date;
+
+  @Field(() => String)
+  contentUrl: string;
+
+  @Field(() => [Int])
+  collections: Promise<Collection[]>;
 }

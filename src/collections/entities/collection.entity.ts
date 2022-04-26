@@ -4,7 +4,7 @@ import { Picture } from 'src/pictures/entities/picture.entity';
 import { Tag } from 'src/tags/entities/tag.entity';
 import {
   Column,
-  JoinColumn,
+  Entity,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -12,6 +12,7 @@ import {
 } from 'typeorm';
 
 @ObjectType()
+@Entity()
 export class Collection {
   @PrimaryGeneratedColumn()
   @Field(() => ID, { description: 'Example field (placeholder)' })
@@ -32,13 +33,24 @@ export class Collection {
   @ManyToOne(() => Category, (Category) => Category.collections)
   category: Category;
 
-  @ManyToMany(() => Tag, (Tag) => Tag.collections)
-  @JoinColumn()
-  tags: Tag[];
+  @ManyToMany(() => Tag, (Tag) => Tag.collections, { lazy: true })
+  @Field(() => [Tag])
+  tags: Promise<Tag[]>;
 
   @ManyToMany(() => Picture, (Picture) => Picture.collections)
-  @JoinTable()
-  pictures: Picture[];
+  @JoinTable({
+    name: 'collection_picture',
+    joinColumn: {
+      name: 'collectionId',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'pictureId',
+      referencedColumnName: 'id',
+    },
+  })
+  @Field(() => [Picture])
+  pictures: Promise<Picture[]>;
 
   @Column()
   @Field(() => String)

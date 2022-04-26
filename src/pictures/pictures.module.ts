@@ -3,9 +3,10 @@ import { PicturesService } from './pictures.service';
 import { PicturesResolver } from './pictures.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Picture } from './entities/picture.entity';
+import { Collection } from 'src/collections/entities/collection.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Picture])],
+  imports: [TypeOrmModule.forFeature([Picture, Collection])],
   providers: [PicturesResolver, PicturesService],
 })
 export class PicturesModule {}

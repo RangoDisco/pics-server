@@ -27,6 +27,9 @@ dotenv.config();
     }),
     PicturesModule,
     UsersModule,
+    CollectionsModule,
+    CategoriesModule,
+    TagsModule,
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

@@ -18,10 +18,10 @@ export class CreateCollectionInput {
   category: Category;
 
   @Field(() => [Int])
-  tags: Tag[];
+  tags: Promise<Tag[]>;
 
   @Field(() => [Int])
-  pictures?: Picture[];
+  pictures?: Promise<Picture[]>;
 
   @Field(() => String)
   musicLink: string;

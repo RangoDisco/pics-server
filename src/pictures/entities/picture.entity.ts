@@ -35,8 +35,11 @@ export class Picture {
   @ManyToOne(() => User, (User) => User.pictures)
   author: User;
 
-  @ManyToMany(() => Collection, (Collection) => Collection.pictures)
-  collections: Collection[];
+  @ManyToMany(() => Collection, (Collection) => Collection.pictures, {
+    lazy: true,
+  })
+  @Field(() => [Collection])
+  collections: Promise<Collection[]>;
 
   @Column()
   @Field(() => Date, {
