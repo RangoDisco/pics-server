@@ -19,5 +19,6 @@ import { TagsModule } from 'src/tags/tags.module';
     TagsModule,
   ],
   providers: [CollectionsResolver, CollectionsService],
+  exports: [CollectionsService],
 })
 export class CollectionsModule {}

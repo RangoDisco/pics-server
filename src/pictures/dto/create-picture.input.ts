@@ -1,5 +1,4 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { Collection } from 'src/collections/entities/collection.entity';
 
 @InputType()
 export class CreatePictureInput {
@@ -16,5 +15,5 @@ export class CreatePictureInput {
   contentUrl: string;
 
   @Field(() => [Int])
-  collections: Promise<Collection[]>;
+  collections: number[];
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CollectionsService } from 'src/collections/collections.service';
 import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { CreatePictureInput } from './dto/create-picture.input';
@@ -11,19 +12,28 @@ export class PicturesService {
   constructor(
     @InjectRepository(Picture)
     private picturesRepository: Repository<Picture>,
-    private usersService: UsersService, // private collectionsService: CollectionsService,
+    private usersService: UsersService,
+    private collectionsService: CollectionsService,
   ) {}
   async create(createPictureInput: CreatePictureInput): Promise<Picture> {
-    const newPicture = this.picturesRepository.create(createPictureInput);
+    const newPicture = this.picturesRepository.create({
+      title: createPictureInput.title,
+      location: createPictureInput.location,
+      date: createPictureInput.date,
+      contentUrl: createPictureInput.contentUrl,
+    });
     newPicture.isActive = true;
     newPicture.creationDate = new Date();
+
     const author = await this.usersService.findOne(null, 1);
-    // const collection = await  this.collectionsService.findBy({createPictureInput.collections})
-    if (author) {
-      newPicture.author = author;
-      console.log(newPicture);
-      return await this.picturesRepository.save(newPicture);
-    }
+
+    const collection = await this.collectionsService.findOne(
+      createPictureInput.collections[0],
+    );
+
+    newPicture.author = author;
+    newPicture.collections = Promise.resolve([collection]);
+    return await this.picturesRepository.save(newPicture);
   }
 
   findAll(): Promise<Picture[]> {

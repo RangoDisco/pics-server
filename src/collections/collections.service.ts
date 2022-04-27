@@ -22,12 +22,10 @@ export class CollectionsService {
     const tags = [];
     for (const tag of createCollectionInput.tags) {
       const tagToAdd = await this.tagsService.findOne(tag);
-      console.log('tagToAdd', tagToAdd);
       if (tagToAdd) {
         tags.push(tagToAdd);
       }
     }
-    console.log('tags', tags);
     if (category) {
       const newCollection = this.collectionsRepository.create({
         title: createCollectionInput.title,
@@ -37,8 +35,7 @@ export class CollectionsService {
         date: createCollectionInput.date,
       });
       newCollection.tags = Promise.resolve(tags);
-      newCollection.category = Promise.resolve(category);
-      console.log(newCollection);
+      category && (newCollection.category = Promise.resolve(category));
       return await this.collectionsRepository.save(newCollection);
     }
   }
@@ -52,6 +49,7 @@ export class CollectionsService {
   }
 
   async findOne(id: number) {
+    console.log(id);
     return await this.collectionsRepository.findOneBy({ id });
   }
 }
