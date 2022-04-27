@@ -30,10 +30,12 @@ export class Collection {
   @Field(() => String, { description: "Collection's description" })
   description: string;
 
-  @ManyToOne(() => Category, (Category) => Category.collections)
-  category: Category;
+  @Field(() => Category)
+  @ManyToOne(() => Category, (Category) => Category.collections, { lazy: true })
+  category: Promise<Category>;
 
   @ManyToMany(() => Tag, (Tag) => Tag.collections, { lazy: true })
+  @JoinTable()
   @Field(() => [Tag])
   tags: Promise<Tag[]>;
 

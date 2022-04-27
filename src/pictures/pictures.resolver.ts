@@ -6,10 +6,16 @@ import { FilterPictureInput } from './dto/filter-picture.input';
 import { createWriteStream } from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import { ERole } from 'src/auth/roles/roles.enum';
+import { Roles } from 'src/auth/roles/roles.decorator';
+import { UseGuards } from '@nestjs/common';
+import { RolesGuard } from 'src/auth/roles/roles-auth.guard';
 @Resolver(() => Picture)
 export class PicturesResolver {
   constructor(private readonly picturesService: PicturesService) {}
 
+  @UseGuards(RolesGuard)
+  @Roles(ERole.Admin)
   @Mutation(() => Picture)
   createPicture(
     @Args('createPictureInput') createPictureInput: CreatePictureInput,
@@ -17,6 +23,8 @@ export class PicturesResolver {
     return this.picturesService.create(createPictureInput);
   }
 
+  @UseGuards(RolesGuard)
+  @Roles(ERole.Admin)
   @Mutation(() => String)
   async uploadFile(
     @Args('file', { type: () => GraphQLUpload })
@@ -34,16 +42,20 @@ export class PicturesResolver {
     }
   }
 
+  @UseGuards(RolesGuard)
+  @Roles(ERole.User)
   @Query(() => [Picture], { name: 'pictures' })
   findAll() {
     return this.picturesService.findAll();
   }
 
-  @Query(() => Picture, { name: 'picture' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.picturesService.findOne(id);
-  }
+  // @Query(() => Picture, { name: 'picture' })
+  // findOne(@Args('id', { type: () => Int }) id: number) {
+  //   return this.picturesService.findOne(id);
+  // }
 
+  @UseGuards(RolesGuard)
+  @Roles(ERole.User)
   @Query(() => Picture, { name: 'picture' })
   findBy(@Args('filterPictureInput') filterPictureInput: FilterPictureInput) {
     return this.picturesService.findBy(filterPictureInput);

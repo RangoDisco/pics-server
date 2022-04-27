@@ -1,7 +1,11 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, registerEnumType } from '@nestjs/graphql';
+import { ERole } from 'src/auth/roles/roles.enum';
 import { Picture } from 'src/pictures/entities/picture.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+registerEnumType(ERole, {
+  name: 'ERole',
+});
 @ObjectType()
 @Entity()
 export class User {
@@ -13,13 +17,13 @@ export class User {
   @Field(() => String, { description: "User's username" })
   username: string;
 
-  @Column()
+  @Column({ select: false })
   @Field(() => String, { description: "User's password" })
   password: string;
 
   @Column()
-  @Field(() => String, { description: "User's role" })
-  role: string;
+  @Field(() => ERole, { description: "User's role" })
+  role: ERole;
 
   @OneToMany(() => Picture, (Picture) => Picture.author)
   pictures: Picture[];

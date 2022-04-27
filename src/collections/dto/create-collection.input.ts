@@ -15,10 +15,10 @@ export class CreateCollectionInput {
   description: string;
 
   @Field(() => Int)
-  category: Category;
+  category: number;
 
   @Field(() => [Int])
-  tags: Promise<Tag[]>;
+  tags: number[];
 
   @Field(() => [Int])
   pictures?: Promise<Picture[]>;

@@ -17,6 +17,14 @@ export class CategoriesService {
   }
 
   findAll() {
-    return this.categoriesRepository.find();
+    return this.categoriesRepository.find({
+      relations: {
+        collections: true,
+      },
+    });
+  }
+
+  async findOne(id: number): Promise<Category> {
+    return this.categoriesRepository.findOneBy({ id });
   }
 }

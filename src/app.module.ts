@@ -8,7 +8,11 @@ import { UsersModule } from './users/users.module';
 import { CollectionsModule } from './collections/collections.module';
 import { CategoriesModule } from './categories/categories.module';
 import { TagsModule } from './tags/tags.module';
+import { AuthModule } from './auth/auth.module';
 import * as dotenv from 'dotenv';
+import { UsersService } from './users/users.service';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './auth/roles/roles-auth.guard';
 
 dotenv.config();
 
@@ -30,21 +34,20 @@ dotenv.config();
     CollectionsModule,
     CategoriesModule,
     TagsModule,
-
+    AuthModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
       debug: false,
       playground: true,
+      context: ({ req }) => ({ headers: req.headers }),
     }),
-
-    UsersModule,
-
-    CollectionsModule,
-
-    CategoriesModule,
-
-    TagsModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
   ],
 })
 export class AppModule {

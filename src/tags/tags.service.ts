@@ -19,4 +19,8 @@ export class TagsService {
   async findAll() {
     return await this.tagsRepository.find();
   }
+
+  async findOne(id: number): Promise<Tag> {
+    return await this.tagsRepository.findOneBy({ id });
+  }
 }

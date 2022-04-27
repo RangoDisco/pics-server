@@ -14,5 +14,6 @@ export class Category {
   title: string;
 
   @OneToMany(() => Collection, (Collection) => Collection.category)
+  @Field(() => [Collection])
   collections: Collection[];
 }

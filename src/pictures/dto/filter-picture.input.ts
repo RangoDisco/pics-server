@@ -5,15 +5,15 @@ import { Tag } from 'src/tags/entities/tag.entity';
 
 @InputType()
 export class FilterPictureInput {
-  @Field(() => Int)
-  id: number;
+  @Field(() => Int, { nullable: true })
+  id?: number;
 
-  @Field(() => Int)
-  collection: Collection;
+  @Field(() => Int, { nullable: true })
+  collection?: Collection;
 
-  @Field(() => Int)
-  category: Category;
+  @Field(() => Int, { nullable: true })
+  category?: Category;
 
-  @Field(() => [Int])
-  tags: Tag[];
+  @Field(() => [Int], { nullable: true })
+  tags?: Tag[];
 }
