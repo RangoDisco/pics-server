@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CollectionsService } from 'src/collections/collections.service';
 import { UsersService } from 'src/users/users.service';
-import { Repository } from 'typeorm';
+import { getConnection, Repository } from 'typeorm';
 import { CreatePictureInput } from './dto/create-picture.input';
 import { FilterPictureInput } from './dto/filter-picture.input';
 import { Picture } from './entities/picture.entity';
@@ -50,6 +50,16 @@ export class PicturesService {
     return await this.picturesRepository.findOneBy({
       id: filterPictureInput.id,
     });
+  }
+
+  async findRandom(): Promise<Picture> {
+    return await getConnection()
+      .createQueryBuilder()
+      .select('p')
+      .from(Picture, 'p')
+      .orderBy('RAND()')
+      .limit(1)
+      .getOne();
   }
 
   async remove(id: string): Promise<void> {

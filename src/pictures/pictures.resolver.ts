@@ -49,11 +49,6 @@ export class PicturesResolver {
     return this.picturesService.findAll();
   }
 
-  // @Query(() => Picture, { name: 'picture' })
-  // findOne(@Args('id', { type: () => Int }) id: number) {
-  //   return this.picturesService.findOne(id);
-  // }
-
   @UseGuards(RolesGuard)
   @Roles(ERole.User)
   @Query(() => Picture, { name: 'picture' })
@@ -61,6 +56,12 @@ export class PicturesResolver {
     return this.picturesService.findBy(filterPictureInput);
   }
 
+  @UseGuards(RolesGuard)
+  @Roles(ERole.User)
+  @Query(() => Picture, { name: 'pictureRandom' })
+  async findRandom() {
+    return this.picturesService.findRandom();
+  }
   // @Mutation(() => Picture)
   // updatePicture(
   //   @Args('updatePictureInput') updatePictureInput: UpdatePictureInput,
