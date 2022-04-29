@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CollectionsService } from 'src/collections/collections.service';
+import { PicturePage } from 'src/pagination/pictures.page';
 import { UsersService } from 'src/users/users.service';
-import { getConnection, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreatePictureInput } from './dto/create-picture.input';
 import { FilterPictureInput } from './dto/filter-picture.input';
 import { Picture } from './entities/picture.entity';
@@ -36,10 +37,14 @@ export class PicturesService {
     return await this.picturesRepository.save(newPicture);
   }
 
-  findAll(): Promise<Picture[]> {
-    return this.picturesRepository.find({
-      relations: ['author'],
+  async findAllBy(
+    filterPictureInput: FilterPictureInput,
+  ): Promise<PicturePage> {
+    const [pictures, totalCount] = await this.picturesRepository.findAndCount({
+      take: filterPictureInput?.pagination?.first || 20,
+      skip: filterPictureInput?.pagination?.after || 0,
     });
+    return { pictures, totalCount };
   }
 
   findOne(id: number): Promise<Picture> {
@@ -53,7 +58,7 @@ export class PicturesService {
   }
 
   async findRandom(): Promise<Picture> {
-    return await getConnection()
+    return await this.picturesRepository
       .createQueryBuilder()
       .select('p')
       .from(Picture, 'p')

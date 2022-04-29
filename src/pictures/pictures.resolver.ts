@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { PicturesService } from './pictures.service';
 import { Picture } from './entities/picture.entity';
 import { CreatePictureInput } from './dto/create-picture.input';
@@ -10,6 +10,7 @@ import { ERole } from 'src/auth/roles/roles.enum';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { UseGuards } from '@nestjs/common';
 import { RolesGuard } from 'src/auth/roles/roles-auth.guard';
+import { PicturePage } from 'src/pagination/pictures.page';
 @Resolver(() => Picture)
 export class PicturesResolver {
   constructor(private readonly picturesService: PicturesService) {}
@@ -44,9 +45,11 @@ export class PicturesResolver {
 
   @UseGuards(RolesGuard)
   @Roles(ERole.User)
-  @Query(() => [Picture], { name: 'pictures' })
-  findAll() {
-    return this.picturesService.findAll();
+  @Query(() => PicturePage, { name: 'picturesPage' })
+  findAllBy(
+    @Args('filterPictureInput') filterPictureInput: FilterPictureInput,
+  ) {
+    return this.picturesService.findAllBy(filterPictureInput);
   }
 
   @UseGuards(RolesGuard)
@@ -62,6 +65,7 @@ export class PicturesResolver {
   async findRandom() {
     return this.picturesService.findRandom();
   }
+
   // @Mutation(() => Picture)
   // updatePicture(
   //   @Args('updatePictureInput') updatePictureInput: UpdatePictureInput,

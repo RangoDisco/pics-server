@@ -6,6 +6,8 @@ import { UseGuards } from '@nestjs/common';
 import { RolesGuard } from 'src/auth/roles/roles-auth.guard';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { ERole } from 'src/auth/roles/roles.enum';
+import { FilterCollectionInput } from './dto/filter-collections';
+import { CollectionsPage } from 'src/pagination/collections.page';
 
 @Resolver(() => Collection)
 export class CollectionsResolver {
@@ -22,9 +24,11 @@ export class CollectionsResolver {
 
   @UseGuards(RolesGuard)
   @Roles(ERole.User)
-  @Query(() => [Collection], { name: 'collections' })
-  findAll() {
-    return this.collectionsService.findAll();
+  @Query(() => CollectionsPage, { name: 'collectionsPage' })
+  findAllBy(
+    @Args('filterCollectionInput') filterCollectionInput: FilterCollectionInput,
+  ): Promise<CollectionsPage> {
+    return this.collectionsService.findAllBy(filterCollectionInput);
   }
 
   @UseGuards(RolesGuard)

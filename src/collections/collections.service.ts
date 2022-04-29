@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoriesService } from 'src/categories/categories.service';
+import { CollectionsPage } from 'src/pagination/collections.page';
 import { TagsService } from 'src/tags/tags.service';
 import { Repository } from 'typeorm';
 import { CreateCollectionInput } from './dto/create-collection.input';
+import { FilterCollectionInput } from './dto/filter-collections';
 import { Collection } from './entities/collection.entity';
 
 @Injectable()
@@ -40,12 +42,15 @@ export class CollectionsService {
     }
   }
 
-  async findAll() {
-    return await this.collectionsRepository.find({
-      relations: {
-        category: true,
-      },
-    });
+  async findAllBy(
+    filterCollectionInput: FilterCollectionInput,
+  ): Promise<CollectionsPage> {
+    const [collections, totalCount] =
+      await this.collectionsRepository.findAndCount({
+        take: filterCollectionInput?.pagination.first || 20,
+        skip: filterCollectionInput?.pagination?.after || 0,
+      });
+    return { collections, totalCount };
   }
 
   async findOne(id: number) {
