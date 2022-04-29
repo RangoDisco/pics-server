@@ -37,5 +37,8 @@ lerna-debug.log*
 #DB
 /pgdata
 
-#upload
+#uploads
 /uploads
+
+#env
+.env

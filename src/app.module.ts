@@ -10,7 +10,6 @@ import { CategoriesModule } from './categories/categories.module';
 import { TagsModule } from './tags/tags.module';
 import { AuthModule } from './auth/auth.module';
 import * as dotenv from 'dotenv';
-import { UsersService } from './users/users.service';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/roles/roles-auth.guard';
 
@@ -20,12 +19,12 @@ dotenv.config();
   imports: [
     TypeOrmModule.forRoot({
       autoLoadEntities: true,
-      type: 'mysql',
-      host: 'db',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'pictest',
+      type: 'postgres',
+      host: process.env.DB_HOST,
+      port: +process.env.DB_CONTAINER_PORT,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       synchronize: true,
       logging: true,
     }),
