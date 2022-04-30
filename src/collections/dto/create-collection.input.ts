@@ -1,7 +1,5 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import { Category } from 'src/categories/entities/category.entity';
 import { Picture } from 'src/pictures/entities/picture.entity';
-import { Tag } from 'src/tags/entities/tag.entity';
 
 @InputType()
 export class CreateCollectionInput {
