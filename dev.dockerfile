@@ -4,12 +4,10 @@ WORKDIR /app
 
 COPY ./package.json /app/
 
+COPY .env /app/
+
 RUN yarn --ignore-engines
 
 COPY . /app/
 
-RUN yarn run build
-
-EXPOSE 4000
-
-CMD ["yarn", "run", "start:prod"]
+CMD ["yarn", "run", "start:dev"]
