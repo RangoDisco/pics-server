@@ -23,13 +23,6 @@ services:
     ports:
       - '4000:4000'
     container_name: pic-nic-back
-    environment:
-      - DB_HOST=${{ secrets.DB_HOST }}
-      - DB_CONTAINER_PORT=${{ secrets.DB_CONTAINER_PORT }}
-      - DB_USERNAME=${{ secrets.DB_USER }}
-      - DB_PASSWORD=${{ secrets.DB_PASS }}
-      - DB_NAME=${{ secrets.DB_NAME }}
-      - JWT_SECRET=${{ secrets.JWT_SECRET}}
     depends_on:
       postgresdb:
         condition: service_healthy
