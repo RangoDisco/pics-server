@@ -2,7 +2,7 @@ FROM node:lts-alpine
 
 WORKDIR /usr/app
 
-COPY ./package.json ./
+COPY package.json ./
 
 RUN yarn
 
@@ -12,4 +12,6 @@ RUN yarn run build
 
 EXPOSE 4000
 
-CMD ["yarn", "run", "start:prod"]
+USER node
+
+CMD ["yarn", "start:prod"]
