@@ -1,12 +1,12 @@
 FROM node:lts-alpine
 
-WORKDIR /app
+WORKDIR /usr/app
 
-COPY ./package.json /app/
+COPY ./package.json ./
 
-RUN yarn --ignore-engines
+RUN yarn
 
-COPY . /app/
+COPY ./ ./
 
 RUN yarn run build
 
