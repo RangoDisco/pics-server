@@ -3,9 +3,6 @@ import { InputType, Field, Int } from '@nestjs/graphql';
 @InputType()
 export class CreatePictureInput {
   @Field(() => String)
-  title: string;
-
-  @Field(() => String)
   location: string;
 
   @Field(() => Date)

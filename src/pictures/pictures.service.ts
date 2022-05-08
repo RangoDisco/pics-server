@@ -18,7 +18,6 @@ export class PicturesService {
   ) {}
   async create(createPictureInput: CreatePictureInput): Promise<Picture> {
     const newPicture = this.picturesRepository.create({
-      title: createPictureInput.title,
       location: createPictureInput.location,
       date: createPictureInput.date,
       contentUrl: createPictureInput.contentUrl,

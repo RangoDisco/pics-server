@@ -17,10 +17,6 @@ export class Picture {
   id: number;
 
   @Column()
-  @Field(() => String, { description: "Picture's title" })
-  title: string;
-
-  @Column()
   @Field(() => String, { description: "Picture's URL" })
   contentUrl: string;
 
