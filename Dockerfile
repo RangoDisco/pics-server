@@ -10,6 +10,4 @@ COPY ./ ./
 
 RUN yarn run build
 
-USER node
-
 CMD ["yarn", "start:prod"]
