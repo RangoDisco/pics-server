@@ -54,7 +54,6 @@ export class CollectionsService {
   }
 
   async findOne(id: number) {
-    console.log(id);
     return await this.collectionsRepository.findOneBy({ id });
   }
 }

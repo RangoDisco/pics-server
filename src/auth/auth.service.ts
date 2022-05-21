@@ -12,17 +12,6 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, password: string): Promise<User> {
-    const user = await this.usersService.findOne(username);
-
-    if (user && (await argon2.verify(user?.password, password))) {
-      const { ...result } = user;
-      return result;
-    }
-
-    return null;
-  }
-
   async login(loginInput: LoginInput) {
     const user = await this.usersService.findOne(loginInput.username);
     return {

@@ -3,14 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CollectionsService } from 'src/collections/collections.service';
 import { PicturePage } from 'src/pagination/pictures.page';
 import { UsersService } from 'src/users/users.service';
-import { Repository } from 'typeorm';
-import { DoSpacesServiceLib, UploadedMulterFileI } from '.';
+import { CreateDateColumn, Repository } from 'typeorm';
+import { DoSpacesServiceLib } from '.';
 import { CreatePictureInput } from './dto/create-picture.input';
 import { FilterPictureInput } from './dto/filter-picture.input';
 import { Picture } from './entities/picture.entity';
 import * as AWS from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
-import { FileUpload } from 'graphql-upload';
 
 @Injectable()
 export class PicturesService {
@@ -78,6 +77,9 @@ export class PicturesService {
     const [pictures, totalCount] = await this.picturesRepository.findAndCount({
       take: filterPictureInput?.pagination?.first || 20,
       skip: filterPictureInput?.pagination?.after || 0,
+      order: {
+        creationDate: 'DESC',
+      },
     });
     return { pictures, totalCount };
   }
