@@ -1,27 +1,6 @@
-# Description
-
-## Pic-Nic back-end code
-
-# Run the project
-
-## 1. Clone the project
-
-## 2. Add .env variables
-
-- DB_HOST
-- DB_USERNAME
-- DB_PASSWORD
-- DB_NAME
-- DB_CONTAINER_PORT
-- HOST_PORT
-- JWT_SECRET
-
-## 3. Run with docker
-
-```bash
-yarn docker
-```
-
-## 4. Open playground or use Insomnia/Postman
-
-Open [http://localhost:4000/graphql](http://localhost:4000/graphql) with your browser to see the result.
+ ## Description:
+ Back-end source code for a simple website where I dump the picture I've taken.
+ ## Made with:
+ * ![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
+ * ![Type-graphql](https://img.shields.io/badge/-TypeGraphQL-%23C04392?style=for-the-badge) ![GraphQL](https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white)
+ * ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
