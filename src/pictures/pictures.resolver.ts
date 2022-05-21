@@ -3,14 +3,15 @@ import { PicturesService } from './pictures.service';
 import { Picture } from './entities/picture.entity';
 import { CreatePictureInput } from './dto/create-picture.input';
 import { FilterPictureInput } from './dto/filter-picture.input';
-import { createWriteStream } from 'fs';
-import { v4 as uuidv4 } from 'uuid';
-import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { ERole } from 'src/auth/roles/roles.enum';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { UseGuards } from '@nestjs/common';
 import { RolesGuard } from 'src/auth/roles/roles-auth.guard';
 import { PicturePage } from 'src/pagination/pictures.page';
+import { GraphQLUpload } from 'graphql-upload';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 @Resolver(() => Picture)
 export class PicturesResolver {
   constructor(private readonly picturesService: PicturesService) {}
@@ -29,18 +30,15 @@ export class PicturesResolver {
   @Mutation(() => String)
   async uploadFile(
     @Args('file', { type: () => GraphQLUpload })
-    { createReadStream, filename }: FileUpload,
-  ): Promise<string> {
-    const newFileName = uuidv4() + '.' + filename.split('.').pop();
-    const res = await new Promise(async (resolve, reject) =>
-      createReadStream()
-        .pipe(createWriteStream(`./uploads/${newFileName}`))
-        .on('finish', () => resolve(true))
-        .on('error', () => reject(false)),
-    );
-    if (res) {
-      return newFileName;
-    }
+    { createReadStream, filename, encoding, mimetype }: any,
+  ): Promise<unknown> {
+    const stream = createReadStream();
+    return await this.picturesService.uploadFile({
+      stream,
+      filename,
+      encoding,
+      mimetype,
+    });
   }
 
   @UseGuards(RolesGuard)

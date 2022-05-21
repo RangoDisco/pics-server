@@ -9,6 +9,7 @@ import { UsersModule } from 'src/users/users.module';
 import { UsersService } from 'src/users/users.service';
 import { AuthModule } from 'src/auth/auth.module';
 import { CollectionsModule } from 'src/collections/collections.module';
+import { DoSpacesServiceProvider } from '.';
 
 @Module({
   imports: [
@@ -17,6 +18,11 @@ import { CollectionsModule } from 'src/collections/collections.module';
     CollectionsModule,
     forwardRef(() => AuthModule),
   ],
-  providers: [PicturesResolver, PicturesService, UsersService],
+  providers: [
+    PicturesResolver,
+    PicturesService,
+    UsersService,
+    DoSpacesServiceProvider,
+  ],
 })
 export class PicturesModule {}

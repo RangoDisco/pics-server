@@ -1,13 +1,13 @@
 FROM node:lts-alpine
 
-WORKDIR /app
+WORKDIR /usr/app
 
-COPY ./package.json /app/
+COPY package.json ./
 
-COPY .env /app/
+RUN yarn
 
-RUN yarn --ignore-engines
+COPY ./ ./
 
-COPY . /app/
+RUN yarn run build
 
-CMD ["yarn", "run", "start:dev"]
+CMD ["yarn", "start:prod"]
