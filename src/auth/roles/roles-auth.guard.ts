@@ -22,9 +22,12 @@ export class RolesGuard implements CanActivate {
     if (!requiredRoles) {
       return true;
     }
-    const token = GqlExecutionContext.create(context)
-      .getContext()
-      .req.headers.authorization.split(' ')[1];
+    const gqlContext = GqlExecutionContext.create(context).getContext();
+    if (!gqlContext.req.headers.authorization) {
+      return false;
+    }
+
+    const token = gqlContext.req.headers.authorization.split(' ')[1];
 
     const decodedToken = this.authService.decodeToken(token);
 

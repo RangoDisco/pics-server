@@ -34,6 +34,7 @@
     "@types/uuid": "^8.3.4",
     "apollo-server-express": "^3.6.7",
     "argon2": "^0.28.2",
+    "aws-sdk": "^2.1140.0",
     "dotenv": "^16.0.0",
     "graphql": "^16.4.0",
     "graphql-tools": "^8.2.8",
