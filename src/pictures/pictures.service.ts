@@ -99,7 +99,7 @@ export class PicturesService {
       .createQueryBuilder()
       .select('p')
       .from(Picture, 'p')
-      .orderBy('RAND()')
+      .orderBy('RANDOM()')
       .limit(1)
       .getOne();
   }
