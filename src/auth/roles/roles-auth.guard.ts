@@ -15,6 +15,7 @@ export class RolesGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    console.log('test');
     const requiredRoles = this.reflector.getAllAndOverride<ERole[]>(ROLES_KEY, [
       context.getHandler(),
       context.getClass(),
@@ -28,8 +29,11 @@ export class RolesGuard implements CanActivate {
     }
 
     const token = gqlContext.req.headers.authorization.split(' ')[1];
-
     const decodedToken = this.authService.decodeToken(token);
+
+    if (+new Date() > decodedToken.exp * 1000) {
+      return false;
+    }
 
     const user = await this.usersService.findOne(decodedToken.username);
 
