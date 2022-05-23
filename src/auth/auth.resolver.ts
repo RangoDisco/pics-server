@@ -25,6 +25,8 @@ export class AuthResolver {
     return this.authService.register(loginInput);
   }
 
+  @UseGuards(RolesGuard)
+  @Roles(ERole.User)
   @Query(() => User)
   async getSignedInUser(@Context() ctx: Ctx): Promise<User> {
     return await this.authService.getSignedInUser(ctx.req);
