@@ -23,11 +23,7 @@ export class RolesGuard implements CanActivate {
       return true;
     }
     const gqlContext = GqlExecutionContext.create(context).getContext();
-    console.log(
-      'cookies',
-      gqlContext.req.cookies,
-      gqlContext.req.signedCookies,
-    );
+
     if (!gqlContext.req.headers.authorization) {
       return false;
     }
