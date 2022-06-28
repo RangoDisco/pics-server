@@ -26,7 +26,7 @@ dotenv.config();
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: false,
-      logging: false,
+      logging: true,
     }),
     PicturesModule,
     UsersModule,
@@ -40,6 +40,15 @@ dotenv.config();
       debug: false,
       playground: false,
       context: ({ req }) => ({ headers: req.headers }),
+      cors: {
+        origin: [
+          'http://localhost:3000',
+          'https://dev.pics.maxime-dias.fr',
+          'https://pics.maxime-dias.fr',
+        ],
+        credentials: true,
+        csrfPrevention: true,
+      },
     }),
   ],
   providers: [
