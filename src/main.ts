@@ -14,6 +14,7 @@ async function bootstrap() {
       'access-control-allow-headers',
       'access-control-allow-origin',
       'content-type',
+      'authorization',
     ],
     origin: [
       'http://localhost:3000',
