@@ -6,7 +6,7 @@ COPY ./package.json /app/
 
 COPY .env /app/
 
-RUN yarn --ignore-engines
+RUN yarn
 
 COPY . /app/
 
