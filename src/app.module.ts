@@ -41,11 +41,7 @@ dotenv.config();
       playground: false,
       context: ({ req }) => ({ headers: req.headers }),
       cors: {
-        origin: [
-          'http://localhost:3000',
-          'https://dev.pics.maxime-dias.fr',
-          'https://pics.maxime-dias.fr',
-        ],
+        origin: '*',
         credentials: true,
         csrfPrevention: true,
       },

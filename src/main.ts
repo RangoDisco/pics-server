@@ -16,11 +16,7 @@ async function bootstrap() {
       'content-type',
       'authorization',
     ],
-    origin: [
-      'http://localhost:3000',
-      'https://dev.pics.maxime-dias.fr',
-      'https://pics.maxime-dias.fr',
-    ],
+    origin: '*',
     credentials: true,
   });
   app.use(cookieParser());
