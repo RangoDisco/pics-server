@@ -40,6 +40,11 @@ dotenv.config();
       debug: false,
       playground: false,
       context: ({ req }) => ({ headers: req.headers }),
+      cors: {
+        origin: '*',
+        credentials: true,
+        csrfPrevention: true,
+      },
     }),
   ],
   providers: [
