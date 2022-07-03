@@ -1,4 +1,4 @@
- # Pics-Client 📸 
+ # Pics-Server 📸 
  
  ## Description:
  Back-end source code for a simple website where I dump the picture I've taken.
